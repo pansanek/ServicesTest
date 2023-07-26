@@ -25,11 +25,13 @@ class MyService: Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         log("OnStartCommand")
-        coroutineScopre.launch {  for(i in 0 until 100){
+        val start = intent?.getIntExtra(EXTRA_START,0)?:0
+        coroutineScopre.launch {
+            for(i in start until start+100){
             delay(1000)
             log("Timer $i")
         } }
-        return super.onStartCommand(intent, flags, startId)
+        return START_REDELIVER_INTENT
     }
     override fun onBind(p0: Intent?): IBinder? {
         TODO("Not yet implemented")
@@ -41,8 +43,11 @@ class MyService: Service() {
 
     companion object{
 
-        fun newIntent(context: Context):Intent{
-            return Intent(context,MyService::class.java)
+        private const val EXTRA_START = "start"
+        fun newIntent(context: Context,start:Int):Intent{
+            return Intent(context,MyService::class.java).apply {
+                putExtra(EXTRA_START,start)
+            }
         }
     }
 }
