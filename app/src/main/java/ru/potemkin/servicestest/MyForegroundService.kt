@@ -33,6 +33,7 @@ class MyForegroundService : Service() {
                 delay(1000)
                 log("Timer $i")
             }
+            stopSelf()
         }
         return START_STICKY
     }
