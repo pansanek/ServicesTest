@@ -10,9 +10,9 @@ import android.os.Message
 import android.util.Log
 import kotlinx.coroutines.*
 
-class MyJobService: JobService() {
+class MyJobService : JobService() {
 
-    private val coroutineScopre= CoroutineScope(Dispatchers.Main)
+    private val coroutineScopre = CoroutineScope(Dispatchers.Main)
 
     override fun onCreate() {
         super.onCreate()
@@ -28,11 +28,11 @@ class MyJobService: JobService() {
     override fun onStartJob(p0: JobParameters?): Boolean {
         log("OnStartCommand")
         coroutineScopre.launch {
-            for(i in 0 until 100){
+            for (i in 0 until 100) {
                 delay(1000)
                 log("Timer $i")
             }
-            jobFinished(p0,true)
+            jobFinished(p0, true)
         }
         return true
     }
@@ -42,12 +42,12 @@ class MyJobService: JobService() {
         return true
     }
 
-    private fun log(message: String){
-        Log.d("SERVICE_TAG","MyService: $message")
+    private fun log(message: String) {
+        Log.d("SERVICE_TAG", "MyJobService: $message")
     }
 
-    companion object{
+    companion object {
 
-
+        const val JOB_ID = 111
     }
 }
